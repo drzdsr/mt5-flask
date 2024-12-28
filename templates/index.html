@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MT5 Flask App</title>
+</head>
+<body>
+    <h1>MetaTrader 5 Flask App</h1>
+    <ul>
+        <li><a href="/account_info">Account Info</a></li>
+        <li><a href="/symbols">Symbols</a></li>
+        <li>
+            Market Data: 
+            <form action="/market_data" method="get" style="display:inline;">
+                <input type="text" name="symbol" placeholder="Enter symbol" required>
+                <button type="submit">Get Data</button>
+            </form>
+        </li>
+    </ul>
+</body>
+</html>
