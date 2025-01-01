@@ -7,16 +7,56 @@
 </head>
 <body>
     <h1>MetaTrader 5 Flask App</h1>
-    <ul>
-        <li><a href="/account_info">Account Info</a></li>
-        <li><a href="/symbols">Symbols</a></li>
-        <li>
-            Market Data: 
-            <form action="/market_data" method="get" style="display:inline;">
-                <input type="text" name="symbol" placeholder="Enter symbol" required>
-                <button type="submit">Get Data</button>
-            </form>
-        </li>
-    </ul>
+
+    <h2>Fetched Data</h2>
+    <div id="data-container">
+        <!-- Data will be displayed here -->
+    </div>
+
+    <script>
+        async function fetchData(endpoint) {
+            try {
+                const response = await fetch(endpoint);
+                const data = await response.json();
+                return data;
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                return { error: error.message };
+            }
+        }
+
+        async function displayData() {
+            const endpoints = [
+                '/account_info',
+                '/symbols',
+                '/market_data/some_symbol', // Replace with actual endpoint if required
+                '/orders',
+                '/positions',
+                '/orders_history',
+                '/positions_history',
+                '/news',
+                '/economic_calendar',
+                '/trade_operations',
+                '/accounts',
+                '/account_history',
+                '/calendar_events',
+                '/trade_request' // Assuming a POST method is required for trade operations
+            ];
+
+            const container = document.getElementById('data-container');
+            container.innerHTML = ''; // Clear existing data
+
+            for (const endpoint of endpoints) {
+                const data = await fetchData(endpoint);
+                if (data.error) {
+                    container.innerHTML += `<h3>${endpoint} Error</h3><p>${data.error}</p>`;
+                } else {
+                    container.innerHTML += `<h3>${endpoint}</h3><pre>${JSON.stringify(data, null, 2)}</pre>`;
+                }
+            }
+        }
+
+        displayData();
+    </script>
 </body>
 </html>
